@@ -1,0 +1,240 @@
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="author" content="Loubaris">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+        crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+
+<div class="container-fluid" style="margin-top: 30px;" onload="init()">
+        <main class="row">
+            <div class="col">
+                <h1>Pannel de gestion</h1>
+
+                <p>Manipulez facilement les données offertes par data-immo grâce à notre interface.</p>
+
+                <thead>
+            <th col-index = 1>Type de vendeur</th>
+            	<select id="type-vendeur" class="table-filter" onchange="filter_rows()">
+                    <option value="all">Tous</option>
+                    <option value="particulier">Particulier</option>
+                    <option value="boutique">Boutique</option>
+                </select>
+            <th col-index = 3>Ville
+                <select id="ville" class="table-filter" onchange="filter_rows()">
+                    <option value="all">Toutes</option>
+                    <option value="Agadir">Agadir</option>
+                    <option value="Al Hoceima">Al Hoceima</option>
+                    <option value="Azilal">Azilal</option>
+                    <option value="Beni Mellal">Beni Mellal</option>
+                    <option value="Bouazza">Bouazza</option>
+                    <option value="Bouskoura">Bouskoura</option>
+                    <option value="Casablanca">Casablanca</option>
+                    <option value="Chaouen">Chaouen</option>
+                    <option value="El Jadida">El Jadida</option>
+                    <option value="El Kelaa des Sraghna">El Kelaa des Sraghna</option>
+                    <option value="Er Rachidia">Er Rachidia</option>
+                    <option value="Essaouira">Essaouira</option>
+                    <option value="Fes">Fes</option>
+                    <option value="Ifrane">Ifrane</option>
+                    <option value="Kenitra">Kenitra</option>
+                    <option value="Khemisset">Khemisset</option>
+                    <option value="Khouribga">Khouribga</option>
+                    <option value="Marrakech">Marrakech</option>
+                    <option value="Meknes">Meknes</option>
+                    <option value="Nador">Nador</option>
+                    <option value="Ouarzazate">Ouarzazate</option>
+                    <option value="Oujda">Oujda</option>
+                    <option value="Rabat">Rabat</option>
+                    <option value="Salé">Salé</option>
+                    <option value="Safi">Safi</option>
+                    <option value="Settat">Settat</option>
+                    <option value="Tanger">Tanger</option>
+                    <option value="Taza">Taza</option>
+                    <option value="Tetouan">Tetouan</option>
+                </select>
+            </th>
+
+            <th col-index = 2>Type de vente
+                <select id="type-vente" class="table-filter" onchange="filter_rows()">
+                    <option value="all">Toutes</option>
+                    <option value="appartement">Appartement</option>
+                    <option value="villa">Villa</option>
+                    <option value="house">Penthouse</option>
+                    <option value="studio">Studio</option>
+                    <option value="showroom">Showroom</option>
+                    <option value="local">Local</option> 
+                    <option value="bureau">Bureau</option>
+                    
+                </select>
+            </th>
+
+            <th col-index = 2>Prix
+                <select id="prix" class="table-filter" onchange="filter_rows()">
+                    <option value="all">Tous</option>
+                    <option value="p-custom">Entre <input style="visibility:  hidden; width: 40px; height: 20px; font-size: 11px;" id="p-depart"><input style="visibility: hidden; width: 40px; height: 20px; font-size: 11px;" id="p-fin"></option>
+                </select>
+            </th>
+
+            <br>
+            <th col-index = 4>Surface
+                <select id="surface" class="table-filter" onchange="filter_rows()">
+                    <option value="all">Toutes</option>
+                    <option value="s-croissante">Croissante</option>
+                    <option value="s-decroissante">Décroissante</option>
+                </select>
+            </th>
+            <th col-index = 5>Publication de l'annonce
+                <select id="date" class="table-filter" onchange="filter_rows()">
+                    <option value="all">Depuis toujours</option>
+                    <option value="d-croissant">Plus récent au plus ancien</option>
+                    <option value="d-decroissant">Plus anciens au plus récent</option>
+                </select>
+            </th>
+        </thead>
+
+
+
+                <div id="table-container" style="margin-top: 15px;">
+                	
+
+                </div>
+
+
+
+            </div>
+        </main>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.2.1/js/bootstrap.bundle.min.js"></script>
+    <script src="js/jquery.csv.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="js/csv_to_html_table.js"></script>
+
+    
+
+    <script>
+        function format_link(link) {
+            if (link)
+                return "<a href='" + link + "' target='_blank'>" + link + "</a><button style='margin-left: 9px;width: 18px; height: 18px; border: none; cursor: pointer; outline: inherit;' id='visualise'><img src='img/fullscreen.png' style='margin-left: -6px; height: 15px; width: 15px;'></button>";
+            else return "";
+        }
+        CsvToHtmlTable.init({
+            csv_path: "/data/mubawab.csv",
+            element: "table-container",
+            allow_download: false,
+            csv_options: {
+                separator: ",",
+                delimiter: ','
+            },
+            datatables_options: {
+                paging: false
+            },
+            custom_formatting: [
+                [6, format_link]
+            ]
+        });
+
+        function init() {
+            var initialisation = 0;
+        }
+        function filter_rows() {
+
+            var table = document.getElementById("table");
+            var type_vendeur = document.getElementById("type-vendeur").value;
+            console.log(type_vendeur);
+
+            var type_vente = document.getElementById("type-vente").value;
+            console.log(type_vente);
+
+
+            var prix = document.getElementById("prix").value;
+            console.log(prix);
+            const cellsprix = table.querySelectorAll('tr');
+            const lprix = []
+            var xprix = 0;
+            cellsprix.forEach(function(cell) {
+                var i = 0;
+                colonnetaman = cell.querySelectorAll('td');
+                var taman = colonnetaman[4];
+                if (typeof taman !== "undefined") {
+                    if (taman.innerHTML !== " " ) {
+                        if (taman.innerHTML.includes("Indéfini") === false) {
+                            var fprix = Number(taman.innerHTML)
+                            lprix.push(fprix); 
+                        }
+                    }
+                }
+            });
+            console.log(initialisation);
+            initialisation = 2
+            console.log(initialisation);
+            lprix.sort(function(a, b){return a-b}) 
+            lprix.forEach((element) => {
+                document.getElementById("prix").innerHTML += ('<option value="' + element +'">'+ element + '</option>');
+            });
+
+
+            if (prix == "p-custom") {
+                    document.getElementById("p-depart").style.visibility = "visible";
+                    document.getElementById("p-fin").style.visibility = "visible";
+
+                    
+
+            } else {
+                    document.getElementById("p-depart").style.visibility = "hidden";
+                    document.getElementById("p-fin").style.visibility = "hidden";
+            }
+
+
+            const ville = document.getElementById("ville").value;
+            const cells = document.querySelectorAll('tr');
+            cells.forEach(function(cell) {
+                if ((cell.innerHTML).toString().includes(ville)) {
+                    if (type_vente !== "all") {
+                        if ((cell.innerHTML).toString().includes(type_vente)) {
+                            cell.style.visibility = 'visible';
+                            cell.style.position = 'relative';
+
+                        } else if (ville === "all") {
+                            cell.style.visibility = 'visible';
+                            cell.style.position = ' relative';
+                        } else {
+                            cell.style.visibility = 'hidden';
+                            cell.style.position = 'absolute';
+                        }
+                    }
+                } else if (ville === "all") {
+                    cell.style.visibility = 'visible';
+                    cell.style.position = ' relative';
+                } else {
+                    cell.style.visibility = 'hidden';
+                    cell.style.position = 'absolute';
+                }
+            })
+            console.log(ville);
+
+
+            var surface = document.getElementById("surface").value;
+            console.log(surface);
+            var date = document.getElementById("date").value;
+            console.log(date);
+
+            
+
+        }
+        filter_rows();
+
+    
+
+
+    </script>
+
